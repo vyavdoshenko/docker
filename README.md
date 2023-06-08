@@ -2,10 +2,10 @@
 
 How to build container:
 ``` sh
-docker build -t builder .
+docker build --build-arg UID=$(id -u) -t builder .
 ```
 
 How to start zsh inside container:
 ``` sh
-docker run --mount type=bind,source=${HOME}/veego,destination=/root/veego -it --name builder-container builder /usr/bin/zsh
+docker run --user builder --mount type=bind,source=${HOME}/veego,destination=/root/veego -it --name builder-container builder /usr/bin/zsh
 ```

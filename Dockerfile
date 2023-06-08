@@ -1,6 +1,8 @@
 FROM ubuntu:22.04
 
-ENV PS1="\u@\h:\w\$ "
+ARG UID
+
+ENV LOCAL_UID=${UID}
 
 RUN apt-get update
 
@@ -8,7 +10,7 @@ RUN apt-get upgrade -y
 
 RUN apt-get dist-upgrade -y
 
-RUN apt-get install -y build-essential gcc g++ clang cmake git libc++-dev libc++1 libc++abi-dev libc++abi1 libssl-dev zsh
+RUN apt-get install -y build-essential gcc g++ clang cmake git libc++-dev libc++1 libc++abi-dev libc++abi1 libssl-dev zsh neovim sudo curl wget
 
 RUN apt-get install -y ripgrep exa bat mc
 
@@ -23,3 +25,17 @@ RUN cd /root && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
     make -j && \
     make install
+
+RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
+
+RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
+
+RUN su - builder -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+
+RUN su - builder -c 'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting'
+
+RUN su - builder -c 'git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions'
+
+COPY zshrc /home/builder/.zshrc
+
+WORKDIR /home/builder
