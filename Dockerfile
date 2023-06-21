@@ -53,15 +53,18 @@ RUN apt -y install \
     fd-find
 
 RUN cd /root && \
-    wget -c http://old-releases.ubuntu.com/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb && \
-    apt-get -y install ./exa_0.9.0-4_amd64.deb
+    if [ "$(uname -m)" = "x86_64" ]; then \
+        wget -c http://old-releases.ubuntu.com/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb --output-document exa_0.9.0-4.deb; \
+    else \
+        wget -c http://old-releases.ubuntu.com/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_arm64.deb --output-document exa_0.9.0-4.deb; \
+    fi && \
+    apt-get -y install ./exa_0.9.0-4.deb
 
-RUN cd /root && \
-    mkdir cmake_install && \
+RUN mkdir cmake_install && \
     cd cmake_install && \
-    wget https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2-Linux-x86_64.sh && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-linux-"$(uname -m)".sh --output-document cmake-3.26.4-linux.sh && \
     mkdir /opt/cmake && \
-    sh cmake-3.17.2-Linux-x86_64.sh --skip-license --prefix=/opt/cmake && \
+    sh cmake-3.26.4-linux.sh --skip-license --prefix=/opt/cmake && \
     ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake && \
     cmake --version
 
@@ -74,7 +77,7 @@ RUN cd /root && \
     mkdir -p build && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
-    make -j && \
+    make && \
     make install
 
 RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
