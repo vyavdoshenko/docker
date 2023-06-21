@@ -1,8 +1,10 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 ARG UID
 
 ENV LOCAL_UID=${UID}
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 
@@ -10,7 +12,58 @@ RUN apt-get upgrade -y
 
 RUN apt-get dist-upgrade -y
 
-RUN apt-get install -y build-essential gcc g++ clang cmake git libc++-dev libc++1 libc++abi-dev libc++abi1 libssl-dev zsh neovim sudo curl wget ninja-build ripgrep exa bat mc lld cpio rsync bc
+RUN apt -y install \
+    git \
+    wget \
+    xz-utils \
+    flex \
+    bison \
+    libboost-dev \
+    python3 \
+    unzip \
+    gcc \
+    g++ \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libncurses-dev \
+    gawk \
+    xutils-dev \
+    build-essential \
+    libssl-dev \
+    gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
+    curl \
+    clang \
+    libc++-dev \
+    libc++1 \
+    libc++abi-dev \
+    libc++abi1 \
+    zsh \
+    neovim \
+    sudo \
+    wget \
+    ninja-build \
+    ripgrep \
+    bat \
+    mc \
+    lld \
+    cpio \
+    rsync \
+    bc \
+    fd-find
+
+RUN cd /root && \
+    wget -c http://old-releases.ubuntu.com/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb && \
+    apt-get -y install ./exa_0.9.0-4_amd64.deb
+
+RUN cd /root && \
+    mkdir cmake_install && \
+    cd cmake_install && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.17.2/cmake-3.17.2-Linux-x86_64.sh && \
+    mkdir /opt/cmake && \
+    sh cmake-3.17.2-Linux-x86_64.sh --skip-license --prefix=/opt/cmake && \
+    ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake && \
+    cmake --version
 
 RUN cd /root && \
     git clone https://github.com/protocolbuffers/protobuf.git && \
