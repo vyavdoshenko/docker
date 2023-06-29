@@ -23,3 +23,5 @@ source ${ZSH}/oh-my-zsh.sh
 
 export EDITOR='nvim'
 export VIEWER='nvim'
+
+source ${HOME}/veego/env
