@@ -1,13 +1,13 @@
 FROM ubuntu:20.04
 
 ARG UID
+ARG AGENT_URL
 
 ENV LOCAL_UID=${UID}
-
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV JENKINS_HOME=/home/builder
-ENV AGENT_WORKDIR=${JENKINS_HOME}/veego
+ENV JENKINS_HOME /home/builder
+ENV AGENT_WORKDIR ${JENKINS_HOME}/agent
 
 RUN apt-get update
 
@@ -93,6 +93,7 @@ RUN su - builder -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyz
 RUN su - builder -c 'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting'
 
 RUN su - builder -c 'git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions'
+
 
 COPY zshrc ${JENKINS_HOME}/.zshrc
 
