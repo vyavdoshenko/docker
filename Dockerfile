@@ -50,7 +50,8 @@ RUN apt -y install \
     cpio \
     rsync \
     bc \
-    fd-find
+    fd-find \
+    dnsutils
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
