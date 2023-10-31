@@ -51,7 +51,9 @@ RUN apt -y install \
     rsync \
     bc \
     fd-find \
-    dnsutils
+    dnsutils \
+    zlib1g-dev \
+    subversion
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
