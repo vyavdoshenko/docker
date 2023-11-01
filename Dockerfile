@@ -53,7 +53,9 @@ RUN apt -y install \
     fd-find \
     dnsutils \
     zlib1g-dev \
-    subversion
+    subversion \
+    asciidoc \
+    xmlto
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
