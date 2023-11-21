@@ -56,7 +56,8 @@ RUN apt -y install \
     subversion \
     asciidoc \
     xmlto \
-    automake
+    automake \
+    groff-base
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
