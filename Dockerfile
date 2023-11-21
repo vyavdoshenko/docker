@@ -55,7 +55,8 @@ RUN apt -y install \
     zlib1g-dev \
     subversion \
     asciidoc \
-    xmlto
+    xmlto \
+    automake
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
