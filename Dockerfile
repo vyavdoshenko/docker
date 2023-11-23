@@ -57,7 +57,8 @@ RUN apt -y install \
     asciidoc \
     xmlto \
     automake \
-    groff-base
+    groff-base \
+    net-tools
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
