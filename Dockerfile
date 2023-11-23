@@ -38,7 +38,9 @@ RUN apt -y install \
     libc++1 \
     libc++abi-dev \
     libc++abi1 \
-    zsh \
+    zsh
+
+RUN apt -y install \
     neovim \
     sudo \
     wget \
