@@ -60,7 +60,8 @@ RUN apt -y install \
     xmlto \
     automake \
     groff-base \
-    net-tools
+    net-tools \
+    kitty
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \
