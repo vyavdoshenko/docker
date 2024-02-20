@@ -12,6 +12,12 @@ RUN apt-get upgrade -y
 
 RUN apt-get dist-upgrade -y
 
+RUN apt-get install -y locales && localedef -i en_US -f UTF-8 en_US.UTF-8
+
+ENV LANG=en_US.UTF-8  
+ENV LANGUAGE=en_US:en  
+ENV LC_ALL=en_US.UTF-8
+
 RUN apt -y install \
     git \
     wget \
@@ -60,8 +66,7 @@ RUN apt -y install \
     xmlto \
     automake \
     groff-base \
-    net-tools \
-    kitty
+    net-tools
 
 RUN cd /root && \
     if [ "$(uname -m)" = "x86_64" ]; then \

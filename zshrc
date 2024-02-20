@@ -1,5 +1,9 @@
 export ZSH="${HOME}/.oh-my-zsh"
-export LANG=en_US.UTF-8
+
+export LANG=en_US.UTF-8  
+export LANGUAGE=en_US:en  
+export LC_ALL=en_US.UTF-8
+
 export CLICOLOR_FORCE=1
 
 ZSH_THEME="simple"
