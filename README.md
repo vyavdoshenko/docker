@@ -13,10 +13,12 @@ docker build --platform linux/arm64 --build-arg UID=$(id -u) -t builder .
 
 ## How to start zsh inside container:
 
+First time:
 ``` sh
 docker docker run --user builder --mount type=bind,source=${HOME}/veego,destination=/home/builder/veego -it --name builder-container builder /usr/bin/zsh
 ```
 
+Restart:
 ``` sh
 docker stop builder-container && docker rm builder-container && docker run --user builder --mount type=bind,source=${HOME}/veego,destination=/home/builder/veego -it --name builder-container builder /usr/bin/zsh
 ```
