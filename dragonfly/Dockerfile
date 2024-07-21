@@ -47,6 +47,8 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
 
 RUN mv ~/.oh-my-zsh /home/builder
 
+RUN git config --global --add safe.directory /home/builder/dragonfly/build/third_party/aws
+
 COPY zshrc /home/builder/.zshrc
 
 WORKDIR /home/builder

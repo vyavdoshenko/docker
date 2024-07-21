@@ -1,4 +1,4 @@
-# docker files repository
+# Docker development containers repository
 
 ## How to build container:
 
