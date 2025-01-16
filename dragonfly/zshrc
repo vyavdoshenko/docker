@@ -31,3 +31,6 @@ export PATH=${HOME}/.local/bin:${PATH}
 export PATH=${PATH}:/usr/local/go/bin
 export GOPATH=${HOME}/go
 export PATH=${PATH}:${GOPATH}/bin
+
+# Docker settings
+export DOCKER_HOST=unix:///var/run/docker.sock
