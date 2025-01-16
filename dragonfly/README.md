@@ -15,7 +15,7 @@ docker build --platform linux/arm64 --build-arg UID=$(id -u) -t builder .
 
 First time:
 ``` sh
-docker run --user builder --mount type=bind,source=${HOME}/dragonfly,destination=/home/builder/dragonfly --mount type=bind,source=${HOME}/.ssh,destination=/home/builder/.ssh,readonly --mount type=bind,source=${HOME}/.gitconfig,destination=/home/builder/.gitconfig,readonly -it --name builder-container builder /usr/bin/zsh
+docker run --user builder --mount type=bind,source=${HOME}/dragonfly,destination=/home/builder/dragonfly -it --name builder-container builder /usr/bin/zsh
 ```
 
 Restart:

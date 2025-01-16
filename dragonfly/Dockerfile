@@ -31,7 +31,19 @@ RUN apt -y install \
     mc \
     fd-find \
     exa \
-    net-tools
+    net-tools \
+    ninja-build \
+    libunwind-dev \
+    libboost-fiber-dev \
+    libssl-dev \
+    autoconf-archive \
+    libtool \
+    cmake \
+    g++ \
+    libzstd-dev \
+    bison \
+    libxml2-dev \
+    zlib1g-dev
 
 RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
 

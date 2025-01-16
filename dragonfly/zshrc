@@ -16,8 +16,6 @@ plugins=(git
          alias-finder
          command-not-found
          extract
-         fd
-         ripgrep
          history-substring-search
          zsh-syntax-highlighting
          zsh-autosuggestions
