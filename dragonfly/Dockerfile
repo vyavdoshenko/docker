@@ -43,13 +43,43 @@ RUN apt -y install \
     libzstd-dev \
     bison \
     libxml2-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    redis-tools
+
+# Add Docker repository and install Docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Add Helm repository and install Helm
+RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+    apt-get update && \
+    apt-get install -y helm
+
+# Install Go 1.19
+RUN wget https://go.dev/dl/go1.19.13.linux-amd64.tar.gz && \
+    rm -rf /usr/local/go && \
+    tar -C /usr/local -xzf go1.19.13.linux-amd64.tar.gz && \
+    rm go1.19.13.linux-amd64.tar.gz
+
+ENV PATH=$PATH:/usr/local/go/bin
+ENV GOPATH=/home/builder/go
+ENV PATH=$PATH:$GOPATH/bin
 
 RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
 
 RUN chmod 0777 /home/builder
 
 RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
+
+# Add builder to docker group
+RUN usermod -aG docker builder
+
+# Configure Docker to run without sudo
+RUN mkdir -p /etc/docker && \
+    echo '{\n  "live-restore": true,\n  "group": "docker"\n}' > /etc/docker/daemon.json
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
