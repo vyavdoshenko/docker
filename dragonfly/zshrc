@@ -34,3 +34,5 @@ export PATH=${PATH}:${GOPATH}/bin
 
 # Docker settings
 export DOCKER_HOST=unix:///var/run/docker.sock
+
+alias ls="exa"

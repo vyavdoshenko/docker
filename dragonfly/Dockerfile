@@ -64,6 +64,24 @@ RUN wget https://go.dev/dl/go1.19.13.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf go1.19.13.linux-amd64.tar.gz && \
     rm go1.19.13.linux-amd64.tar.gz
 
+# Install Redis 6.2.11
+RUN wget http://download.redis.io/releases/redis-6.2.11.tar.gz && \
+    tar xzf redis-6.2.11.tar.gz && \
+    cd redis-6.2.11 && \
+    make -j && \
+    make PREFIX=/usr/local/redis-6.2.11 install && \
+    make install && \
+    ln -s /usr/local/redis-6.2.11/bin/redis-server /usr/local/bin/redis-server-6.2.11
+
+# Install Redis 7.2.2
+RUN wget http://download.redis.io/releases/redis-7.2.2.tar.gz && \
+    tar xzf redis-7.2.2.tar.gz && \
+    cd redis-7.2.2 && \
+    make -j && \
+    make PREFIX=/usr/local/redis-7.2.2 install && \
+    make install && \
+    ln -s /usr/local/redis-7.2.2/bin/redis-server /usr/local/bin/redis-server-7.2.2
+
 ENV PATH=$PATH:/usr/local/go/bin
 ENV GOPATH=/home/builder/go
 ENV PATH=$PATH:$GOPATH/bin
