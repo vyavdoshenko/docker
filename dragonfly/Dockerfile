@@ -82,6 +82,14 @@ RUN wget http://download.redis.io/releases/redis-7.2.2.tar.gz && \
     make install && \
     ln -s /usr/local/redis-7.2.2/bin/redis-server /usr/local/bin/redis-server-7.2.2
 
+# Install Valkey 8.0.1
+RUN wget -O valkey-8.0.1.tar.gz https://github.com/valkey-io/valkey/archive/refs/tags/8.0.1.tar.gz && \
+    tar xzf valkey-8.0.1.tar.gz && \
+    cd valkey-8.0.1 && \
+    make -j && \
+    make PREFIX=/usr/local/valkey-8.0.1 install && \
+    ln -s /usr/local/valkey-8.0.1/bin/valkey-server /usr/local/bin/valkey-server-8.0.1
+
 ENV PATH=$PATH:/usr/local/go/bin
 ENV GOPATH=/home/builder/go
 ENV PATH=$PATH:$GOPATH/bin
