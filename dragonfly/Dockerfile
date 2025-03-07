@@ -44,7 +44,10 @@ RUN apt -y install \
     bison \
     libxml2-dev \
     zlib1g-dev \
-    redis-tools
+    libre2-dev \
+    redis-tools \
+    iputils-ping \
+    net-tools
 
 # Add Docker repository and install Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
