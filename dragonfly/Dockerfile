@@ -98,6 +98,36 @@ ENV PATH=$PATH:/usr/local/go/bin
 ENV GOPATH=/home/builder/go
 ENV PATH=$PATH:$GOPATH/bin
 
+RUN mkdir -p /etc/valkey && \
+    cd /etc/valkey && \
+    echo "[ req ]" > /etc/valkey/openssl.cnf && \
+    echo "default_bits       = 2048" >> /etc/valkey/openssl.cnf && \
+    echo "prompt             = no" >> /etc/valkey/openssl.cnf && \
+    echo "default_md         = sha256" >> /etc/valkey/openssl.cnf && \
+    echo "distinguished_name = req_distinguished_name" >> /etc/valkey/openssl.cnf && \
+    echo "req_extensions     = req_ext" >> /etc/valkey/openssl.cnf && \
+    echo "[ req_distinguished_name ]" >> /etc/valkey/openssl.cnf && \
+    echo "C  = US" >> /etc/valkey/openssl.cnf && \
+    echo "ST = Test" >> /etc/valkey/openssl.cnf && \
+    echo "L  = Test" >> /etc/valkey/openssl.cnf && \
+    echo "O  = Test" >> /etc/valkey/openssl.cnf && \
+    echo "OU = Test" >> /etc/valkey/openssl.cnf && \
+    echo "CN = ::1" >> /etc/valkey/openssl.cnf && \
+    echo "[ req_ext ]" >> /etc/valkey/openssl.cnf && \
+    echo "subjectAltName = @alt_names" >> /etc/valkey/openssl.cnf && \
+    echo "[ alt_names ]" >> /etc/valkey/openssl.cnf && \
+    echo "IP.1 = 127.0.0.1" >> /etc/valkey/openssl.cnf && \
+    echo "IP.2 = ::1" >> /etc/valkey/openssl.cnf && \
+    echo "IP.3 = fd00:dead:beef::2" >> /etc/valkey/openssl.cnf && \
+    echo "IP.4 = fd00:dead:beef::3" >> /etc/valkey/openssl.cnf && \
+    openssl req -x509 -new -nodes -keyout redis.ca.key -out redis.ca.pem -days 365 \
+    -subj "/C=US/ST=Test/L=Test/O=Test/OU=Test/CN=Redis Test CA" && \
+    openssl req -new -nodes -keyout redis.server.key -out redis.server.csr -config openssl.cnf && \
+    openssl x509 -req -in redis.server.csr -CA redis.ca.pem -CAkey redis.ca.key -CAcreateserial \
+    -out redis.server.pem -days 365 -extensions req_ext -extfile openssl.cnf && \
+    chmod 0644 * && \
+    openssl x509 -in redis.server.pem -text -noout | grep "Subject Alternative Name" -A 1
+
 RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
 
 RUN chmod 0777 /home/builder
