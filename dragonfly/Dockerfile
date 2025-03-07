@@ -40,6 +40,7 @@ RUN apt -y install \
     libtool \
     cmake \
     g++ \
+    pkg-config \
     libzstd-dev \
     bison \
     libxml2-dev \
@@ -47,7 +48,9 @@ RUN apt -y install \
     libre2-dev \
     redis-tools \
     iputils-ping \
-    net-tools
+    net-tools \
+    telnet \
+    iproute2
 
 # Add Docker repository and install Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
@@ -73,7 +76,6 @@ RUN wget http://download.redis.io/releases/redis-6.2.11.tar.gz && \
     cd redis-6.2.11 && \
     make -j && \
     make PREFIX=/usr/local/redis-6.2.11 install && \
-    make install && \
     ln -s /usr/local/redis-6.2.11/bin/redis-server /usr/local/bin/redis-server-6.2.11
 
 # Install Redis 7.2.2
@@ -82,7 +84,6 @@ RUN wget http://download.redis.io/releases/redis-7.2.2.tar.gz && \
     cd redis-7.2.2 && \
     make -j && \
     make PREFIX=/usr/local/redis-7.2.2 install && \
-    make install && \
     ln -s /usr/local/redis-7.2.2/bin/redis-server /usr/local/bin/redis-server-7.2.2
 
 # Install Valkey 8.0.1
