@@ -50,7 +50,14 @@ RUN apt -y install \
     iputils-ping \
     net-tools \
     telnet \
-    iproute2
+    iproute2 \
+    lsb-release
+
+# Add memtier_benchmark
+RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list && \
+    apt-get update && \
+    apt-get install -y memtier-benchmark
 
 # Add include-what-you-use
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/llvm.asc > /dev/null && \
