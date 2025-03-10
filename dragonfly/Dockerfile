@@ -52,6 +52,20 @@ RUN apt -y install \
     telnet \
     iproute2
 
+# Add include-what-you-use
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/llvm.asc > /dev/null && \
+    echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-18 main" | sudo tee /etc/apt/sources.list.d/llvm.list && \
+    apt-get update && \
+    sudo apt-get install -y clang-18 clangd-18 clang-tidy-18 clang-format-18 clang-tools-18 lldb-18 lld-18 llvm-18 llvm-18-dev && \
+    sudo apt-get install -y llvm-18-runtime libllvm-18-ocaml-dev libllvm18 llvm-18-doc libclang-common-18-dev libclang-18-dev libclang1-18 && \
+    sudo apt-get install -y python3-clang-18 libfuzzer-18-dev libomp-18-dev libmlir-18-dev mlir-18-tools libc++-18-dev libc++abi-18-dev libunwind-18-dev && \
+    git clone https://github.com/include-what-you-use/include-what-you-use.git && \
+    cd include-what-you-use && git checkout clang_18 && git pull && \
+    mkdir build && cd build && \
+    cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-18 .. && \
+    make -j && \
+    sudo make install
+
 # Add Docker repository and install Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
