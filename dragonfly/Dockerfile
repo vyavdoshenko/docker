@@ -52,7 +52,8 @@ RUN apt -y install \
     telnet \
     iproute2 \
     lsb-release \
-    ccache
+    ccache \
+    mold
 
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
