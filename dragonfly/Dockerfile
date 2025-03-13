@@ -177,6 +177,4 @@ RUN mv ~/.oh-my-zsh /home/builder
 
 COPY zshrc /home/builder/.zshrc
 
-COPY moldrc /home/builder/.moldrc
-
 WORKDIR /home/builder

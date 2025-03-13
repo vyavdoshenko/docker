@@ -1,5 +1,0 @@
-export CC="ccache gcc"
-export CXX="ccache g++"
-
-export LD=mold
-export LDFLAGS="-fuse-ld=mold"
