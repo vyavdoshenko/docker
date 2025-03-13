@@ -51,7 +51,8 @@ RUN apt -y install \
     net-tools \
     telnet \
     iproute2 \
-    lsb-release
+    lsb-release \
+    ccache
 
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
@@ -175,5 +176,7 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
 RUN mv ~/.oh-my-zsh /home/builder
 
 COPY zshrc /home/builder/.zshrc
+
+COPY moldrc /home/builder/.moldrc
 
 WORKDIR /home/builder
