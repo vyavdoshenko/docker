@@ -1,0 +1,2 @@
+export LD=mold
+export LDFLAGS="-fuse-ld=mold"

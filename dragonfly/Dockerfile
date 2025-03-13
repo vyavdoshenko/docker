@@ -6,6 +6,8 @@ ENV LOCAL_UID=${UID}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ENV TZ=Europe/Kyiv
+
 RUN apt-get update
 
 RUN apt-get upgrade -y
@@ -53,7 +55,8 @@ RUN apt -y install \
     iproute2 \
     lsb-release \
     ccache \
-    mold
+    mold \
+    tzdata
 
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
@@ -177,5 +180,7 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
 RUN mv ~/.oh-my-zsh /home/builder
 
 COPY zshrc /home/builder/.zshrc
+
+COPY moldrc /home/builder/.moldrc
 
 WORKDIR /home/builder
