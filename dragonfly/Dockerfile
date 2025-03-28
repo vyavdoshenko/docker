@@ -90,11 +90,11 @@ RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/
     apt-get update && \
     apt-get install -y helm
 
-# Install Go 1.19
-RUN wget https://go.dev/dl/go1.19.13.linux-amd64.tar.gz && \
+# Install Go 1.24.1
+RUN wget https://go.dev/dl/go1.24.1.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
-    tar -C /usr/local -xzf go1.19.13.linux-amd64.tar.gz && \
-    rm go1.19.13.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.24.1.linux-amd64.tar.gz && \
+    rm go1.24.1.linux-amd64.tar.gz
 
 # Install Redis 6.2.11
 RUN wget http://download.redis.io/releases/redis-6.2.11.tar.gz && \
