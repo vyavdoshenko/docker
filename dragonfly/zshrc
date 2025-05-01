@@ -33,7 +33,10 @@ export PATH=${PATH}:/usr/local/go/bin
 export GOPATH=${HOME}/go
 export PATH=${PATH}:${GOPATH}/bin
 
+# Add cargo binaries to PATH
+export PATH=${HOME}/.cargo/bin:${PATH}
+
 # Docker settings
 export DOCKER_HOST=unix:///var/run/docker.sock
 
-alias ls="exa"
+alias ls="eza"
