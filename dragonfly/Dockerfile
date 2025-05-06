@@ -24,40 +24,60 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
 RUN apt -y install \
-    git \
-    wget \
-    unzip \
-    curl \
-    zsh \
-    neovim \
-    sudo \
+    autoconf \
+    autoconf-archive \
+    automake \
     bat \
-    mc \
+    bison \
+    build-essential \
+    ca-certificates \
+    ccache \
+    clang \
+    cmake \
+    curl \
+    g++ \
+    git \
     htop \
+    iproute2 \
+    iputils-ping \
+    libboost-all-dev \
+    libboost-fiber-dev \
+    libevent-dev \
+    liblzma-dev \
+    libre2-dev \
+    libssl-dev \
+    libssl-dev \
+    libtool \
+    libunwind-dev \
+    libxml2-dev \
+    libz-dev \
+    libzstd-dev \
+    lld \
+    llvm \
+    lsb-release \
+    mc \
+    mold \
+    neovim \
     net-tools \
     ninja-build \
-    libunwind-dev \
-    libboost-fiber-dev \
-    libssl-dev \
-    autoconf-archive \
-    libtool \
-    cmake \
-    g++ \
     pkg-config \
-    libzstd-dev \
-    bison \
-    libxml2-dev \
-    zlib1g-dev \
-    libre2-dev \
+    python3 \
+    python3-pip \
     redis-tools \
-    iputils-ping \
-    net-tools \
+    sudo \
     telnet \
-    iproute2 \
-    lsb-release \
-    ccache \
-    mold \
-    tzdata
+    tzdata\
+    unzip \
+    vim \
+    wget \
+    zlib1g-dev \
+    zsh
+
+# Install AFL++
+RUN git clone https://github.com/AFLplusplus/AFLplusplus.git && \
+    cd AFLplusplus && \
+    make distrib && \
+    make install
 
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
