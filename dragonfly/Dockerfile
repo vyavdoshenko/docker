@@ -24,6 +24,7 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
 RUN apt -y install \
+    afl \
     autoconf \
     autoconf-archive \
     automake \
@@ -73,31 +74,11 @@ RUN apt -y install \
     zlib1g-dev \
     zsh
 
-# Install AFL++
-RUN git clone https://github.com/AFLplusplus/AFLplusplus.git && \
-    cd AFLplusplus && \
-    make distrib && \
-    make install
-
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/redis.list && \
     apt-get update && \
     apt-get install -y memtier-benchmark
-
-# Add include-what-you-use
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/llvm.asc > /dev/null && \
-    echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-18 main" | tee /etc/apt/sources.list.d/llvm.list && \
-    apt-get update && \
-    apt-get install -y clang-18 clangd-18 clang-tidy-18 clang-format-18 clang-tools-18 lldb-18 lld-18 llvm-18 llvm-18-dev && \
-    apt-get install -y llvm-18-runtime libllvm-18-ocaml-dev libllvm18 llvm-18-doc libclang-common-18-dev libclang-18-dev libclang1-18 && \
-    apt-get install -y python3-clang-18 libfuzzer-18-dev libomp-18-dev libmlir-18-dev mlir-18-tools libc++-18-dev libc++abi-18-dev libunwind-18-dev && \
-    git clone https://github.com/include-what-you-use/include-what-you-use.git && \
-    cd include-what-you-use && git checkout clang_18 && git pull && \
-    mkdir build && cd build && \
-    cmake -G "Unix Makefiles" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-18 .. && \
-    make -j && \
-    make install
 
 # Add Docker repository and install Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
