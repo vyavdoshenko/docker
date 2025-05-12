@@ -160,7 +160,12 @@ RUN mkdir -p /etc/valkey && \
     -out /etc/valkey/client.crt -days 3650 -extfile /etc/valkey/openssl.cnf -extensions req_ext && \
     chmod 0644 *
 
-RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
+RUN existing_user=$(getent passwd $LOCAL_UID | cut -d: -f1) && \
+    if [ -n "$existing_user" ]; then \
+        echo "Removing existing user: $existing_user with UID $LOCAL_UID"; \
+        deluser --remove-home "$existing_user"; \
+    fi && \
+    adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
 
 RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
 
