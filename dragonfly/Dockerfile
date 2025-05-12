@@ -37,6 +37,7 @@ RUN apt -y install \
     cmake \
     curl \
     g++ \
+    gdb \
     git \
     htop \
     iproute2 \
@@ -59,6 +60,7 @@ RUN apt -y install \
     mc \
     mold \
     neovim \
+    netcat-openbsd \
     net-tools \
     ninja-build \
     pkg-config \
