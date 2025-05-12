@@ -1,4 +1,4 @@
-FROM ghcr.io/romange/ubuntu-dev:22
+FROM ubuntu:24.04
 
 ARG UID
 
@@ -24,7 +24,7 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
 RUN apt -y install \
-    afl \
+    afl++ \
     autoconf \
     autoconf-archive \
     automake \
@@ -162,8 +162,6 @@ RUN mkdir -p /etc/valkey && \
 
 RUN adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
 
-RUN chmod 0777 /home/builder
-
 RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
 
 # Add builder to docker group
@@ -185,7 +183,5 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
 USER root
 
 COPY zshrc /home/builder/.zshrc
-
-COPY moldrc /home/builder/.moldrc
 
 WORKDIR /home/builder
