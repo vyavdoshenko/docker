@@ -7,6 +7,8 @@ export LC_ALL=en_US.UTF-8
 export CLICOLOR_FORCE=1
 export TERM=xterm-256color
 
+export MIMALLOC_SHOW_WARN=0
+
 ZSH_THEME="simple"
 
 CASE_SENSITIVE="true"
