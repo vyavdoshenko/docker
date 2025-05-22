@@ -40,3 +40,5 @@ export PATH=${HOME}/.cargo/bin:${PATH}
 export DOCKER_HOST=unix:///var/run/docker.sock
 
 alias ls="eza"
+
+alias colorize="sed -E -e 's/^E/\x1b[31mE\x1b[0m/' -e 's/^W/\x1b[33mW\x1b[0m/' -e 's/^I/\x1b[32mI\x1b[0m/'"
