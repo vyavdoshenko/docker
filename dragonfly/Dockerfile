@@ -191,4 +191,6 @@ USER root
 
 COPY zshrc /home/builder/.zshrc
 
+COPY colorize_script.py /home/builder/.colorize_script.py
+
 WORKDIR /home/builder
