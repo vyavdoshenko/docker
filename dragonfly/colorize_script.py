@@ -37,15 +37,15 @@ for line in sys.stdin:
         text_before_bracket = current_text_to_process[:bracket_pos]
         text_after_bracket = current_text_to_process[bracket_pos+1:]
 
-        processed_text_before_bracket = re.sub(r"(\d+)", f"{CYAN_FG}\\1{RESET_ALL}", text_before_bracket)
-        processed_text_before_bracket = re.sub(r"\.", f"{GRAY_FG}.{RESET_ALL}", processed_text_before_bracket)
-        processed_text_before_bracket = re.sub(r":", f"{GRAY_FG}:{RESET_ALL}", processed_text_before_bracket)
+        processed_text_before_bracket = re.sub(r"(\d+)", f"{GRAY_FG}\\1{RESET_ALL}", text_before_bracket)
+        processed_text_before_bracket = re.sub(r"\.", f"{CYAN_FG}.{RESET_ALL}", processed_text_before_bracket)
+        processed_text_before_bracket = re.sub(r":", f"{CYAN_FG}:{RESET_ALL}", processed_text_before_bracket)
         
         output_parts.append(processed_text_before_bracket)
-        output_parts.append(f"{GRAY_FG}]{RESET_ALL}")
+        output_parts.append(f"{CYAN_FG}]{RESET_ALL}")
         output_parts.append(text_after_bracket)
     else:
         output_parts.append(current_text_to_process)
             
     sys.stdout.write("".join(output_parts) + "\n")
-    sys.stdout.flush() 
+    sys.stdout.flush()
