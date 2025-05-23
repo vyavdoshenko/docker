@@ -42,5 +42,14 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 alias ls="eza"
 
 function colorize() {
-    python3 ~/.colorize_script.py
+    if [ "$1" = "cut" ]; then
+        # Pass the "cut" argument to the script
+        python3 ~/.colorize_script.py "cut"
+    else
+        # Call script without arguments for original behavior
+        # If other arguments were passed to colorize (e.g. colorize foo bar),
+        # they will be ignored by the script if it's not expecting them.
+        # The script currently only checks for "cut" or no arguments.
+        python3 ~/.colorize_script.py
+    fi
 }
