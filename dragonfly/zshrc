@@ -39,6 +39,9 @@ export PATH=${HOME}/.cargo/bin:${PATH}
 # Docker settings
 export DOCKER_HOST=unix:///var/run/docker.sock
 
+# Activate Python virtual environment
+source ${HOME}/.venv/bin/activate
+
 alias ls="eza"
 
 function colorize() {

@@ -66,6 +66,10 @@ RUN apt -y install \
     pkg-config \
     python3 \
     python3-pip \
+    python3-dev \
+    python3-tk \
+    python3-venv \
+    python3-all \
     redis-tools \
     sudo \
     telnet \
@@ -183,6 +187,9 @@ USER builder
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     . "$HOME/.cargo/env" && \
     cargo install fd-find eza ripgrep bat
+
+RUN python3 -m venv /home/builder/.venv && \
+    /home/builder/.venv/bin/pip install --upgrade pip setuptools wheel
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
