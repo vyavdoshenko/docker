@@ -194,6 +194,8 @@ RUN python3 -m venv /home/builder/.venv && \
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+RUN git clone https://github.com/dragonflydb/df-afl.git /home/builder/df-afl
 USER root
 
 COPY zshrc /home/builder/.zshrc
