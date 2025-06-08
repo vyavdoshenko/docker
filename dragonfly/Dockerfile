@@ -1,8 +1,10 @@
 FROM ubuntu:24.04
 
 ARG UID
+ARG GID
 
 ENV LOCAL_UID=${UID}
+ENV LOCAL_GID=${GID}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -171,7 +173,14 @@ RUN existing_user=$(getent passwd $LOCAL_UID | cut -d: -f1) && \
         echo "Removing existing user: $existing_user with UID $LOCAL_UID"; \
         deluser --remove-home "$existing_user"; \
     fi && \
-    adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder
+    if [ -n "$LOCAL_GID" ]; then \
+        if ! getent group $LOCAL_GID > /dev/null; then \
+            addgroup --gid $LOCAL_GID g${LOCAL_GID}; \
+        fi; \
+        adduser --uid $LOCAL_UID --gid $LOCAL_GID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder; \
+    else \
+        adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder; \
+    fi
 
 RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
 
