@@ -36,6 +36,7 @@ RUN apt -y install \
     ca-certificates \
     ccache \
     clang \
+    clangd \
     cmake \
     curl \
     g++ \
