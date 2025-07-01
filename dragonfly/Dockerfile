@@ -66,10 +66,13 @@ RUN apt -y install \
     netcat-openbsd \
     net-tools \
     ninja-build \
+    pkg-config \
     python3 \
+    python3-pip \
+    python3-dev \
+    python3-tk \
     python3-venv \
     python3-all \
-    pkg-config \
     redis-tools \
     sudo \
     telnet \
@@ -180,11 +183,10 @@ RUN existing_user=$(getent passwd $LOCAL_UID | cut -d: -f1) && \
         adduser --uid $LOCAL_UID --gecos "" --disabled-password --home /home/builder --shell /usr/bin/zsh builder; \
     fi
 
-RUN addgroup --system docker
-
-RUN usermod -aG docker builder
-
 RUN usermod -aG sudo builder && echo "builder ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/builder
+
+# Add builder to docker group
+RUN usermod -aG docker builder
 
 # Configure Docker to run without sudo
 RUN mkdir -p /etc/docker && \
@@ -204,7 +206,6 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUS
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 RUN git clone https://github.com/dragonflydb/df-afl.git /home/builder/df-afl
-
 USER root
 
 COPY zshrc /home/builder/.zshrc
