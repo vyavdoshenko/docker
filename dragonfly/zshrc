@@ -56,3 +56,5 @@ function colorize() {
         python3 ~/.colorize_script.py
     fi
 }
+
+sudo chmod 0666 /var/run/docker.sock
