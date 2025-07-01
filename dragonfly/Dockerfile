@@ -67,13 +67,8 @@ RUN apt -y install \
     net-tools \
     ninja-build \
     pkg-config \
-    python3 \
-    python3-pip \
-    python3-dev \
-    python3-tk \
-    python3-venv \
-    python3-all \
     redis-tools \
+    software-properties-common \
     sudo \
     telnet \
     tzdata\
@@ -82,6 +77,19 @@ RUN apt -y install \
     wget \
     zlib1g-dev \
     zsh
+
+RUN add-apt-repository ppa:deadsnakes/ppa
+
+RUN apt-get update --fix-missing
+
+RUN apt-get upgrade -y
+
+RUN apt -y install \
+    python3.10 \
+    python3.10-dev \
+    python3.10-tk \
+    python3.10-venv \
+    python3.10-distutils
 
 # Add memtier_benchmark
 RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg && \
@@ -198,7 +206,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     . "$HOME/.cargo/env" && \
     cargo install fd-find eza ripgrep bat
 
-RUN python3 -m venv /home/builder/.venv && \
+RUN python3.10 -m venv /home/builder/.venv && \
     /home/builder/.venv/bin/pip install --upgrade pip setuptools wheel
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
