@@ -36,6 +36,9 @@ export PATH=${PATH}:${GOPATH}/bin
 # Add cargo binaries to PATH
 export PATH=${HOME}/.cargo/bin:${PATH}
 
+# pperf
+export PATH=/usr/local/go/pkg/tool/linux_amd64/:${PATH}
+
 # Docker settings
 export DOCKER_HOST=unix:///var/run/docker.sock
 

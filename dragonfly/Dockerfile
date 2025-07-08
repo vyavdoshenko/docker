@@ -42,6 +42,7 @@ RUN apt -y install \
     g++ \
     gdb \
     git \
+    graphviz \
     htop \
     iproute2 \
     iputils-ping \
