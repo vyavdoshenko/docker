@@ -218,9 +218,9 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.
 
 RUN git clone https://github.com/dragonflydb/df-afl.git /home/builder/df-afl
 
-RUN npm install -g @anthropic-ai/claude-code
-
 USER root
+
+RUN npm install -g @anthropic-ai/claude-code
 
 COPY zshrc /home/builder/.zshrc
 
