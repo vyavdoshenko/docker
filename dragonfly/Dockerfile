@@ -67,6 +67,8 @@ RUN apt -y install \
     netcat-openbsd \
     net-tools \
     ninja-build \
+    nodejs \
+    npm \
     pkg-config \
     redis-tools \
     software-properties-common \
