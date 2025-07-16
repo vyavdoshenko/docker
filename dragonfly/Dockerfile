@@ -220,8 +220,6 @@ RUN git clone https://github.com/dragonflydb/df-afl.git /home/builder/df-afl
 
 USER root
 
-RUN npm install -g @anthropic-ai/claude-code
-
 COPY zshrc /home/builder/.zshrc
 
 COPY colorize_script.py /home/builder/.colorize_script.py
