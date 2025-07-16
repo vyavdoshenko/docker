@@ -60,6 +60,6 @@ function colorize() {
     fi
 }
 
-alias claude=${HOME}/.claude/local/claude
+alias claude="~/.claude/local/claude"
 
 sudo chmod 0666 /var/run/docker.sock
