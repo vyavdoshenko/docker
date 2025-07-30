@@ -30,7 +30,6 @@ RUN apt -y install \
     autoconf \
     autoconf-archive \
     automake \
-    bat \
     bison \
     build-essential \
     ca-certificates \
