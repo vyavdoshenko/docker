@@ -37,7 +37,6 @@ RUN apt -y install \
     neovim \
     netcat-openbsd \
     net-tools \
-    software-properties-common \
     sudo \
     telnet \
     unzip \
@@ -45,18 +44,15 @@ RUN apt -y install \
     wget \
     zsh
 
-RUN add-apt-repository ppa:deadsnakes/ppa
-
 RUN apt-get update --fix-missing
 
 RUN apt-get upgrade -y
 
 RUN apt -y install \
-    python3.11 \
-    python3.11-dev \
-    python3.11-tk \
-    python3.11-venv \
-    python3.11-distutils
+    python3 \
+    python3-dev \
+    python3-tk \
+    python3-venv
 
 # Add Docker repository and install Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
@@ -93,9 +89,10 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     . "$HOME/.cargo/env" && \
     cargo install fd-find eza ripgrep bat
 
-RUN python3.11 -m venv /home/builder/.venv && \
+RUN python3 -m venv /home/builder/.venv && \
     /home/builder/.venv/bin/pip install --upgrade pip setuptools wheel && \
-    /home/builder/.venv/bin/pip install vectordb-bench
+    /home/builder/.venv/bin/pip install vectordb-bench && \
+    /home/builder/.venv/bin/pip install "vectordb-bench[redis]"
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
