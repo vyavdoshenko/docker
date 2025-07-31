@@ -43,7 +43,9 @@ RUN apt -y install \
     unzip \
     vim \
     wget \
-    zsh
+    zsh \
+    nodejs \
+    npm
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 
