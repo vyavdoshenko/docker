@@ -66,7 +66,6 @@ RUN apt -y install \
     netcat-openbsd \
     net-tools \
     ninja-build \
-    nodejs \
     npm \
     pkg-config \
     redis-tools \
@@ -80,10 +79,11 @@ RUN apt -y install \
     zlib1g-dev \
     zsh
 
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+RUN apt-get install -y nodejs
+
 RUN add-apt-repository ppa:deadsnakes/ppa
-
 RUN apt-get update --fix-missing
-
 RUN apt-get upgrade -y
 
 RUN apt -y install \
