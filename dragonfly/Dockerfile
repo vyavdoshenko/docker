@@ -77,7 +77,8 @@ RUN apt -y install \
     vim \
     wget \
     zlib1g-dev \
-    zsh
+    zsh \
+    jq
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN apt-get install -y nodejs
