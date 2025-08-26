@@ -78,7 +78,9 @@ RUN apt -y install \
     wget \
     zlib1g-dev \
     zsh \
-    jq
+    jq \
+    pciutils \
+    lshw
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN apt-get install -y nodejs
