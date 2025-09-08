@@ -60,7 +60,8 @@ RUN apt-get update --fix-missing && apt-get -y install \
     zsh \
     jq \
     pciutils \
-    lshw
+    lshw \
+    subversion
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update --fix-missing
