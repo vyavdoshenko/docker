@@ -61,7 +61,8 @@ RUN apt-get update --fix-missing && apt-get -y install \
     jq \
     pciutils \
     lshw \
-    subversion
+    subversion \
+    npm
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update --fix-missing
