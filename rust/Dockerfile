@@ -62,7 +62,8 @@ RUN apt-get update --fix-missing && apt-get -y install \
     pciutils \
     lshw \
     subversion \
-    npm
+    npm \
+    wamerican
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update --fix-missing
