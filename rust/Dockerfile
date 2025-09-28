@@ -63,7 +63,8 @@ RUN apt-get update --fix-missing && apt-get -y install \
     lshw \
     subversion \
     npm \
-    wamerican
+    wamerican \
+    athena-jot
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update --fix-missing
