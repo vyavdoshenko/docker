@@ -80,7 +80,8 @@ RUN apt -y install \
     zsh \
     jq \
     pciutils \
-    lshw
+    lshw \
+    bsdmainutils
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN apt-get install -y nodejs
