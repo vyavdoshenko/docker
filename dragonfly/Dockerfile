@@ -51,7 +51,6 @@ RUN apt -y install \
     liblzma-dev \
     libre2-dev \
     libssl-dev \
-    libssl-dev \
     libtool \
     libunwind-dev \
     libxml2-dev \
