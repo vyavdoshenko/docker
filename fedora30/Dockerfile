@@ -60,5 +60,19 @@ RUN mkdir -p /usr/local/lib/cmake/Boost-${BOOST_VERSION} && \
     echo 'set(Boost_INCLUDE_DIRS /usr/local/include)' >> /usr/local/lib/cmake/Boost-${BOOST_VERSION}/BoostConfig.cmake && \
     echo 'set(Boost_LIBRARY_DIRS /usr/local/lib)' >> /usr/local/lib/cmake/Boost-${BOOST_VERSION}/BoostConfig.cmake
 
+# Build newer bison (Fedora 30 has 3.0.5, need 3.5+)
+ARG BISON_VERSION=3.8.2
+WORKDIR /tmp/bison-build
+RUN curl -L -o bison.tar.xz "https://ftp.gnu.org/gnu/bison/bison-${BISON_VERSION}.tar.xz" && \
+    tar xf bison.tar.xz && \
+    cd bison-${BISON_VERSION} && \
+    ./configure --prefix=/usr/local && \
+    make -j$(nproc) && \
+    make install && \
+    cd /tmp && rm -rf /tmp/bison-build
+
+# Make sure /usr/local/bin is in PATH
+ENV PATH="/usr/local/bin:$PATH"
+
 # Verify
 RUN gcc --version && g++ --version
