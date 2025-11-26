@@ -11,6 +11,7 @@ RUN dnf install -y \
     flex bison texinfo \
     curl tar xz bzip2 \
     git diffutils file which patch \
+    boost-devel \
     && dnf clean all
 
 # Build GCC 14
