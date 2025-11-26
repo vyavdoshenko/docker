@@ -38,6 +38,7 @@ ENV CXX=g++
 RUN dnf install -y \
     openssl-devel libunwind-devel \
     autoconf automake libtool \
+    zlib-devel \
     && dnf clean all
 
 # Build Boost with cmake config files
