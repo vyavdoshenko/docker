@@ -10,7 +10,7 @@ RUN dnf install -y \
     gmp-devel mpfr-devel libmpc-devel \
     flex bison texinfo \
     curl tar xz bzip2 \
-    git diffutils file which \
+    git diffutils file which patch \
     && dnf clean all
 
 # Build GCC 14
