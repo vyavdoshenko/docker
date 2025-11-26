@@ -41,8 +41,8 @@ RUN dnf install -y \
     && dnf clean all
 
 # Build Boost with cmake config files
-ARG BOOST_VERSION=1.89.0
-ARG BOOST_VERSION_UNDERSCORE=1_89_0
+ARG BOOST_VERSION=1.85.0
+ARG BOOST_VERSION_UNDERSCORE=1_85_0
 WORKDIR /tmp/boost-build
 RUN curl -L -o boost.tar.gz "https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}-cmake.tar.gz" && \
     tar xzf boost.tar.gz && \
