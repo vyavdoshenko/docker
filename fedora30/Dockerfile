@@ -41,23 +41,23 @@ RUN dnf install -y \
     && dnf clean all
 
 # Build Boost with cmake config files
-ARG BOOST_VERSION=1.84.0
+ARG BOOST_VERSION=1.89.0
+ARG BOOST_VERSION_UNDERSCORE=1_89_0
 WORKDIR /tmp/boost-build
-RUN curl -LO https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_1_84_0.tar.bz2 && \
-    tar xjf boost_1_84_0.tar.bz2 && \
-    cd boost_1_84_0 && \
-    ./bootstrap.sh --prefix=/usr/local && \
-    ./b2 install -j$(nproc) \
-        --with-context --with-system --with-fiber \
-        link=static threading=multi \
-        --layout=system && \
+RUN curl -L -o boost.tar.gz "https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}-cmake.tar.gz" && \
+    tar xzf boost.tar.gz && \
+    cd boost-${BOOST_VERSION} && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_SHARED_LIBS=OFF && \
+    cmake --build . -j$(nproc) && \
+    cmake --install . && \
     cd /tmp && rm -rf /tmp/boost-build
 
 # Create cmake config files manually for Boost
-RUN mkdir -p /usr/local/lib/cmake/Boost-1.84.0 && \
-    echo 'set(Boost_VERSION 1.84.0)' > /usr/local/lib/cmake/Boost-1.84.0/BoostConfig.cmake && \
-    echo 'set(Boost_INCLUDE_DIRS /usr/local/include)' >> /usr/local/lib/cmake/Boost-1.84.0/BoostConfig.cmake && \
-    echo 'set(Boost_LIBRARY_DIRS /usr/local/lib)' >> /usr/local/lib/cmake/Boost-1.84.0/BoostConfig.cmake
+RUN mkdir -p /usr/local/lib/cmake/Boost-${BOOST_VERSION} && \
+    echo 'set(Boost_VERSION 1.84.0)' > /usr/local/lib/cmake/Boost-${BOOST_VERSION}/BoostConfig.cmake && \
+    echo 'set(Boost_INCLUDE_DIRS /usr/local/include)' >> /usr/local/lib/cmake/Boost-${BOOST_VERSION}/BoostConfig.cmake && \
+    echo 'set(Boost_LIBRARY_DIRS /usr/local/lib)' >> /usr/local/lib/cmake/Boost-${BOOST_VERSION}/BoostConfig.cmake
 
 # Verify
 RUN gcc --version && g++ --version
