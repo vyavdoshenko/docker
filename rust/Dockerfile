@@ -21,6 +21,12 @@ RUN apt-get install -y locales && localedef -i en_US -f UTF-8 en_US.UTF-8
 # Generate Ukrainian locale
 RUN localedef -i uk_UA -f UTF-8 uk_UA.UTF-8
 
+RUN localedef -i ru_RU -f UTF-8 ru_RU.UTF-8
+RUN localedef -i ja_JP -f UTF-8 ja_JP.UTF-8
+RUN localedef -i ja_JP -f EUC-JP ja_JP.EUC-JP
+RUN localedef -i el_GR -f UTF-8 el_GR.UTF-8
+RUN localedef -i el_GR -f ISO-8859-7 el_GR.ISO-8859-7
+
 ENV LANG=en_US.UTF-8  
 ENV LANGUAGE=en_US:en  
 ENV LC_ALL=en_US.UTF-8
@@ -64,7 +70,8 @@ RUN apt-get update --fix-missing && apt-get -y install \
     subversion \
     npm \
     wamerican \
-    athena-jot
+    athena-jot \
+    valgrind
 
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update --fix-missing
