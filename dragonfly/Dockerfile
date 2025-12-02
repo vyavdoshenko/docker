@@ -82,7 +82,8 @@ RUN apt -y install \
     lshw \
     bsdmainutils \
     valgrind \
-    lld-17
+    lld-17 \
+    gh
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN apt-get install -y nodejs
