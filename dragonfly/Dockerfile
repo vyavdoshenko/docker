@@ -60,6 +60,7 @@ RUN apt -y install \
     libzstd-dev \
     lld \
     llvm \
+    llvm-dev \
     lsb-release \
     lshw \
     mc \
