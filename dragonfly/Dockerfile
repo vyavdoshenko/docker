@@ -26,11 +26,11 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
 RUN apt -y install \
-    afl++ \
     autoconf \
     autoconf-archive \
     automake \
     bison \
+    bsdmainutils \
     build-essential \
     ca-certificates \
     ccache \
@@ -40,11 +40,13 @@ RUN apt -y install \
     curl \
     g++ \
     gdb \
+    gh \
     git \
     graphviz \
     htop \
     iproute2 \
     iputils-ping \
+    jq \
     libboost-all-dev \
     libboost-fiber-dev \
     libevent-dev \
@@ -59,13 +61,15 @@ RUN apt -y install \
     lld \
     llvm \
     lsb-release \
+    lshw \
     mc \
     mold \
     neovim \
-    netcat-openbsd \
     net-tools \
+    netcat-openbsd \
     ninja-build \
     npm \
+    pciutils \
     pkg-config \
     redis-tools \
     software-properties-common \
@@ -73,17 +77,11 @@ RUN apt -y install \
     telnet \
     tzdata\
     unzip \
+    valgrind \
     vim \
     wget \
     zlib1g-dev \
-    zsh \
-    jq \
-    pciutils \
-    lshw \
-    bsdmainutils \
-    valgrind \
-    lld-17 \
-    gh
+    zsh
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 RUN apt-get install -y nodejs
@@ -110,6 +108,14 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     apt-get update --fix-missing && \
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Build AFL++ 4.09c from source with AFL_PERSISTENT_RECORD support
+RUN git clone --depth=1 --branch v4.09c https://github.com/AFLplusplus/AFLplusplus.git /opt/AFLplusplus && \
+    cd /opt/AFLplusplus && \
+    sed -i 's|// #define AFL_PERSISTENT_RECORD|#define AFL_PERSISTENT_RECORD|' include/config.h && \
+    make distrib && \
+    make install && \
+    cd / && rm -rf /opt/AFLplusplus
 
 # Install Go 1.24.1
 RUN wget https://go.dev/dl/go1.24.1.linux-amd64.tar.gz && \
