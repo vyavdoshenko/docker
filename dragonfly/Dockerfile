@@ -34,7 +34,7 @@ RUN apt -y install \
     build-essential \
     ca-certificates \
     ccache \
-    clang \
+    clang-18 \
     clangd \
     cmake \
     curl \
@@ -58,9 +58,9 @@ RUN apt -y install \
     libxml2-dev \
     libz-dev \
     libzstd-dev \
-    lld \
-    llvm \
-    llvm-dev \
+    lld-18 \
+    llvm-18 \
+    llvm-18-dev \
     lsb-release \
     lshw \
     mc \
@@ -110,8 +110,8 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /
     apt-get update --fix-missing && \
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Build AFL++ 4.09c from source with AFL_PERSISTENT_RECORD support
-RUN git clone --depth=1 --branch v4.09c https://github.com/AFLplusplus/AFLplusplus.git /opt/AFLplusplus && \
+# Build AFL++ from source with AFL_PERSISTENT_RECORD support
+RUN git clone --depth=1 --branch v4.34c https://github.com/AFLplusplus/AFLplusplus.git /opt/AFLplusplus && \
     cd /opt/AFLplusplus && \
     sed -i 's|// #define AFL_PERSISTENT_RECORD|#define AFL_PERSISTENT_RECORD|' include/config.h && \
     make distrib && \
