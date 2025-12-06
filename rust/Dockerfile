@@ -16,16 +16,24 @@ RUN apt-get upgrade -y
 
 RUN apt-get dist-upgrade -y
 
-RUN apt-get install -y locales && localedef -i en_US -f UTF-8 en_US.UTF-8
+RUN apt-get install -y locales locales-all && localedef -i en_US -f UTF-8 en_US.UTF-8
 
 # Generate Ukrainian locale
 RUN localedef -i uk_UA -f UTF-8 uk_UA.UTF-8
 
-RUN localedef -i ru_RU -f UTF-8 ru_RU.UTF-8
-RUN localedef -i ja_JP -f UTF-8 ja_JP.UTF-8
-RUN localedef -i ja_JP -f EUC-JP ja_JP.EUC-JP
-RUN localedef -i el_GR -f UTF-8 el_GR.UTF-8
-RUN localedef -i el_GR -f ISO-8859-7 el_GR.ISO-8859-7
+RUN localedef -i ru_RU -f UTF-8 ru_RU.UTF-8 || true
+RUN localedef -i ja_JP -f UTF-8 ja_JP.UTF-8 || true
+RUN localedef -i ja_JP -f EUC-JP ja_JP.EUC-JP || true
+RUN localedef -i el_GR -f UTF-8 el_GR.UTF-8 || true
+RUN localedef -i el_GR -f ISO-8859-7 el_GR.ISO-8859-7 || true
+RUN localedef -i ja_JP -f SHIFT_JIS ja_JP.shiftjis || true
+RUN localedef -i ja_JP -f SHIFT_JIS ja_JP.shiftjis || true
+RUN localedef -i ja_JP -f EUC-JP ja_JP.eucjp || true  
+RUN localedef -i el_GR -f ISO-8859-7 el_GR.iso88597 || true
+
+# Valgrind for memory tests
+RUN apt-get install -y valgrind
+
 
 ENV LANG=en_US.UTF-8  
 ENV LANGUAGE=en_US:en  
